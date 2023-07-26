@@ -26,12 +26,17 @@ let users = [
 // GET request: Retrieve all users
 router.get("/",(req,res)=>{
   // Copy the code here
+  res.send(users) //returns all users
   res.send("Yet to be implemented")//This line is to be replaced with actual return value
 });
 
 // GET by specific ID request: Retrieve a single user with email ID
 router.get("/:email",(req,res)=>{
   // Copy the code here
+  const email = req.params.email; //assignes a constant to the given email in a url call
+  let filtered_users = users.filter((user)=>user.email === email); //filters the users parent object into a single user based on the email that is assigned to the constant 'email'
+
+  res.send(filtered_users); //gets the value of the entire user array object stored in the filtered_users variable
   res.send("Yet to be implemented")//This line is to be replaced with actual return value
 });
 

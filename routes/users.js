@@ -35,8 +35,12 @@ router.get("/:email",(req,res)=>{
   // Copy the code here
   const email = req.params.email; //assignes a constant to the given email in a url call
   let filtered_users = users.filter((user)=>user.email === email); //filters the users parent object into a single user based on the email that is assigned to the constant 'email'
-
-  res.send(filtered_users); //gets the value of the entire user array object stored in the filtered_users variable
+  
+  if (filtered_users > 0) {
+    res.send(filtered_users); //gets the value of the entire user array object stored in the filtered_users variable
+  } else {
+      res.send("unable to find user!");
+  }
   res.send("Yet to be implemented")//This line is to be replaced with actual return value
 });
 
@@ -54,6 +58,31 @@ router.post("/",(req,res)=>{
 // PUT request: Update the details of a user by email ID
 router.put("/:email", (req, res) => {
   // Copy the code here
+  const email = req.params.email;
+  let filtered_users = users.filter((user)=>user.email === email);
+
+  if (filtered_users.length > 0) {
+      let filtered_user = filtered_users[0];
+      let DOB = req.query.DOB;
+      let lastName = req.query.lastName;
+      let firstName = req.query.firstName;
+
+      if (DOB) {
+          filtered_user.DOB = DOB;
+      }
+      if (lastName) {
+          filtered_user.lastName = lastName;
+      }
+      if (firstName) {
+          filtered_user.firstName = firstName;
+      }
+
+      users = users.filter((user)=> user.email != email);
+      users.push({filtered_user});
+      res.send(`The user with the email ${email} has been updated!`);
+  } else {
+      res.send("Please enter a valid email to update user info. Unable to find user.");
+  }
   res.send("Yet to be implemented")//This line is to be replaced with actual return value
 });
 
@@ -61,6 +90,9 @@ router.put("/:email", (req, res) => {
 // DELETE request: Delete a user by email ID
 router.delete("/:email", (req, res) => {
   // Copy the code here
+  const email = req.params.email;
+  users = users.filter((user)=> user.email != email);
+  res.send("The user with email " + email + " has been deleted!");
   res.send("Yet to be implemented")//This line is to be replaced with actual return value
 });
 

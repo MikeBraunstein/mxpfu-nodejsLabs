@@ -36,10 +36,10 @@ router.get("/:email",(req,res)=>{
   const email = req.params.email; //assignes a constant to the given email in a url call
   let filtered_users = users.filter((user)=>user.email === email); //filters the users parent object into a single user based on the email that is assigned to the constant 'email'
   
-  if (filtered_users > 0) {
+  if (filtered_users.length > 0) {
     res.send(filtered_users); //gets the value of the entire user array object stored in the filtered_users variable
   } else {
-      res.send("unable to find user!");
+      res.send(`unable to find user, ${email}!`);
   }
   res.send("Yet to be implemented")//This line is to be replaced with actual return value
 });

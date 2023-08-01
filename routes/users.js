@@ -26,7 +26,7 @@ let users = [
 // GET request: Retrieve all users
 router.get("/",(req,res)=>{
   // Copy the code here
-  res.send(users) //returns all users
+  res.send(JSON.stringify({users},null,4)) //returns all users
   res.send("Yet to be implemented")//This line is to be replaced with actual return value
 });
 
@@ -78,7 +78,7 @@ router.put("/:email", (req, res) => {
       }
 
       users = users.filter((user)=> user.email != email);
-      users.push({filtered_user});
+      users.push(filtered_user);
       res.send(`The user with the email ${email} has been updated!`);
   } else {
       res.send("Please enter a valid email to update user info. Unable to find user.");
